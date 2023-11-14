@@ -8,6 +8,7 @@ export default function App() {
         <Navbar/>
       <Text>Open up App.js to start working on your app!</Text>
       <Text> hello world</Text>
+        <Text> This is test for windows app</Text>
       <StatusBar style="auto" />
     </View>
   );
