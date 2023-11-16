@@ -1,5 +1,5 @@
 import {Alert, FlatList, Modal, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {StatusBar} from "expo-status-bar";
 import {GoalItem} from "./components/GoalItem";
 
@@ -16,11 +16,10 @@ export default function App() {
 
 	function closeAddGoalItem() {
 		setModalVisible(!modalVisible)
-		if (goalInput !== ''){
-			setGoalList(goalList => [...goalList, {id:id, content:goalInput}])
-			setId(id+1)
-		}
-		else {
+		if (goalInput !== '') {
+			setGoalList(goalList => [...goalList, {id: id, content: goalInput}])
+			setId(id + 1)
+		} else {
 			console.log('empty input')
 		}
 		setGoalInput('')
@@ -31,7 +30,7 @@ export default function App() {
 	// how does it going to trigger the change and rendering
 	function deleteGoal(id) {
 		let temp = [...goalList]
-		temp.splice(temp.findIndex(value => value.id === id),1)
+		temp.splice(temp.findIndex(value => value.id === id), 1)
 
 		// let temp = goalList.splice(goalList.findIndex(value => value.id === id),1)
 		setGoalList(temp)
@@ -46,50 +45,49 @@ export default function App() {
 	// 	console.log("list hook trigger " + JSON.stringify(goalList))
 	// }, [goalList]);
 
-	const renderGoalItem = ({item}) =>(
+	const renderGoalItem = ({item}) => (
 		<GoalItem id={item.id} content={item.content} delFuc={deleteGoal}/>
 	);
 
 
-
 	return (
-			<View style={styles.centeredView}>
-				<StatusBar style="dark-content"/>
-				<Modal
-					animationType="slide"
-					transparent={true}
-					visible={modalVisible}
-					onRequestClose={() => {
-						Alert.alert('Modal has been closed.');
-						setModalVisible(!modalVisible);
-					}}>
-					<View style={styles.centeredView}>
-						<View style={styles.modalView}>
+		<View style={styles.centeredView}>
+			<StatusBar style="dark-content"/>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalVisible}
+				onRequestClose={() => {
+					Alert.alert('Modal has been closed.');
+					setModalVisible(!modalVisible);
+				}}>
+				<View style={styles.centeredView}>
+					<View style={styles.modalView}>
 
-							<Text style={styles.modalText}>Goal name:</Text>
-							<TextInput
-								style={[styles.input, styles.botMargin]}
-								onChangeText={setGoalInput}
-								value={goalInput}
-								placeholder="Goal description"
-							/>
+						<Text style={styles.modalText}>Goal name:</Text>
+						<TextInput
+							style={[styles.input, styles.botMargin]}
+							onChangeText={setGoalInput}
+							value={goalInput}
+							placeholder="Goal description"
+						/>
 
-							<Pressable
-								style={[styles.button, styles.buttonClose]}
-								onPress={closeAddGoalItem}>
-								<Text style={styles.textStyle}>Done</Text>
-							</Pressable>
+						<Pressable
+							style={[styles.button, styles.buttonClose]}
+							onPress={closeAddGoalItem}>
+							<Text style={styles.textStyle}>Done</Text>
+						</Pressable>
 
-						</View>
 					</View>
-				</Modal>
-				<Pressable
-					style={[styles.button, styles.buttonOpen]}
-					onPress={showAddGoalItem}>
-					<Text style={styles.textStyle}>Add Goals</Text>
-				</Pressable>
-				<FlatList data = {goalList} renderItem={renderGoalItem} keyExtractor={item => item.id}/>
-			</View>
+				</View>
+			</Modal>
+			<Pressable
+				style={[styles.button, styles.buttonOpen]}
+				onPress={showAddGoalItem}>
+				<Text style={styles.textStyle}>Add Goals</Text>
+			</Pressable>
+			<FlatList data={goalList} renderItem={renderGoalItem} keyExtractor={item => item.id}/>
+		</View>
 	);
 }
 
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2,
-		marginBottom:5,
+		marginBottom: 5,
 	},
 	buttonOpen: {
 		backgroundColor: '#F194FF',
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		textAlign: 'center',
 	},
-	botMargin:{
+	botMargin: {
 		marginBottom: 15
 	}
 });
