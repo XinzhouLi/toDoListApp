@@ -72,7 +72,6 @@ export default function App() {
 								onChangeText={setGoalInput}
 								value={goalInput}
 								placeholder="Goal description"
-								keyboardType="text"
 							/>
 
 							<Pressable
