@@ -1,23 +1,58 @@
-import {Alert, Button, Modal, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, FlatList, Modal, Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useEffect, useState} from "react";
+import {StatusBar} from "expo-status-bar";
+import {GoalItem} from "./components/GoalItem";
 
 export default function App() {
 	const [goalList, setGoalList] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [goalInput, setGoalInput] = useState('')
-	function showAddGoal() {
-		console.log("active")
+	const [id, setId] = useState(0)
+
+	function showAddGoalItem() {
+		setModalVisible(true)
+		console.log('open')
+	}
+
+	function closeAddGoalItem() {
+		setModalVisible(!modalVisible)
+		if (goalInput !== ''){
+			setGoalList(goalList => [...goalList, {id:id, content:goalInput}])
+			setId(id+1)
+		}
+		else {
+			console.log('empty input')
+		}
+		setGoalInput('')
+		console.log("close")
+	}
+
+
+	// how does it going to trigger the change and rendering
+	function deleteGoal(id) {
+		let temp = [...goalList]
+		temp.splice(temp.findIndex(value => value.id === id),1)
+		setGoalList(temp)
+		console.log('del func trigger' + id + JSON.stringify(goalList))
 	}
 
 	useEffect(() => {
-		console.log(goalInput)
+		console.log("input hook trigger " + goalInput)
 	}, [goalInput]);
+
+	useEffect(() => {
+		console.log("list hook trigger " + JSON.stringify(goalList))
+	}, [goalList]);
+
+	const renderGoalItem = ({item}) =>(
+		<GoalItem id={item.id} content={item.content} delFuc={deleteGoal}/>
+	);
 
 
 
 	return (
 			<View style={styles.centeredView}>
-
+				<StatusBar style="dark-content"/>
 				<Modal
 					animationType="slide"
 					transparent={true}
@@ -40,11 +75,7 @@ export default function App() {
 
 							<Pressable
 								style={[styles.button, styles.buttonClose]}
-								onPress={() => {setModalVisible(!modalVisible)
-									setGoalList(goalList => [...goalList,goalInput])
-									setGoalInput('')
-									console.log("close")
-								}}>
+								onPress={closeAddGoalItem}>
 								<Text style={styles.textStyle}>Done</Text>
 							</Pressable>
 
@@ -53,9 +84,10 @@ export default function App() {
 				</Modal>
 				<Pressable
 					style={[styles.button, styles.buttonOpen]}
-					onPress={() => setModalVisible(true)}>
+					onPress={showAddGoalItem}>
 					<Text style={styles.textStyle}>Add Goals</Text>
 				</Pressable>
+				<FlatList data = {goalList} renderItem={renderGoalItem} keyExtractor={item => item.id}/>
 			</View>
 	);
 }
