@@ -32,17 +32,19 @@ export default function App() {
 	function deleteGoal(id) {
 		let temp = [...goalList]
 		temp.splice(temp.findIndex(value => value.id === id),1)
+
+		// let temp = goalList.splice(goalList.findIndex(value => value.id === id),1)
 		setGoalList(temp)
 		console.log('del func trigger' + id + JSON.stringify(goalList))
 	}
 
-	useEffect(() => {
-		console.log("input hook trigger " + goalInput)
-	}, [goalInput]);
-
-	useEffect(() => {
-		console.log("list hook trigger " + JSON.stringify(goalList))
-	}, [goalList]);
+	// useEffect(() => {
+	// 	console.log("input hook trigger " + goalInput)
+	// }, [goalInput]);
+	//
+	// useEffect(() => {
+	// 	console.log("list hook trigger " + JSON.stringify(goalList))
+	// }, [goalList]);
 
 	const renderGoalItem = ({item}) =>(
 		<GoalItem id={item.id} content={item.content} delFuc={deleteGoal}/>
@@ -66,7 +68,7 @@ export default function App() {
 
 							<Text style={styles.modalText}>Goal name:</Text>
 							<TextInput
-								style={styles.input}
+								style={[styles.input, styles.botMargin]}
 								onChangeText={setGoalInput}
 								value={goalInput}
 								placeholder="Goal description"
@@ -98,13 +100,15 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		alignItems: 'center',
 		justifyContent: 'center',
-
+		paddingTop: '40px'
 	},
 	centeredView: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: 22,
+		marginTop: 80,
+
+
 	},
 	modalView: {
 		margin: 20,
@@ -125,6 +129,7 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2,
+		marginBottom:5,
 	},
 	buttonOpen: {
 		backgroundColor: '#F194FF',
@@ -141,4 +146,7 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		textAlign: 'center',
 	},
+	botMargin:{
+		marginBottom: 15
+	}
 });

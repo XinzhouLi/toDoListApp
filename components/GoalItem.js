@@ -7,6 +7,7 @@ export const GoalItem = ({id, content, delFuc}) => {
         <Pressable style={styles.item} onPress={() => del(id)}>
             <Text style={styles.title}>
                 {id}
+                .
                 {content}
             </Text>
         </Pressable>
@@ -17,12 +18,14 @@ export const GoalItem = ({id, content, delFuc}) => {
 
 const styles = StyleSheet.create({
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: '#F194FF',
+        marginBottom:3,
     },
     title: {
-        fontSize: 32,
+        fontSize: 20,
+        color: '#FFFFFF'
     },
 });
